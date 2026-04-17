@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Cheng Liu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- Sakura layer -->
+<div class="sakura-layer" id="sakura"></div>
+
+<div class="shell">
+
+<!-- Sidebar -->
+<aside>
+  <nav>
+    <a href="#hero"         class="active"><span class="nav-dot"></span>Home</a>
+    <a href="#about">                      <span class="nav-dot"></span>About</a>
+    <a href="#experience">                 <span class="nav-dot"></span>Experience</a>
+    <a href="#publications">               <span class="nav-dot"></span>Publications</a>
+    <a href="#projects">                   <span class="nav-dot"></span>Projects</a>
+    <a href="#news">                       <span class="nav-dot"></span>Updates</a>
+    <a href="#contact">                    <span class="nav-dot"></span>Contact</a>
+    <a href="blog.html">                   <span class="nav-dot"></span>Blog</a>
+  </nav>
+
+  <div class="side-links"></div>
+  <div class="side-status"></div>
+  <div class="side-quote"></div>
+</aside>
+
+<main>
+
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-avatar"></div>
+
+      <div class="hero-content">
+        <div class="hero-tag"></div>
+        <h1 class="hero-name"></h1>
+        <p class="hero-sub"></p>
+        <div class="hero-pills"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="reveal">
+    <div class="sec-label">01 &nbsp; ABOUT</div>
+    <h2 class="sec-title about-sec-title">About Me</h2>
+    <div class="about-cyclist-lane" aria-hidden="true">
+      <div class="about-cyclist">
+        <canvas class="about-cyclist-svg pixel-bike-canvas" width="174" height="78" aria-hidden="true"></canvas>
+      </div>
+    </div>
+    <div class="about-grid"></div>
+  </section>
+
+  <section id="experience" class="reveal">
+    <div class="sec-label">02 &nbsp; EXPERIENCE</div>
+    <h2 class="sec-title">Experience</h2>
+    <div class="exp-list"></div>
+  </section>
+
+  <section id="publications" class="reveal">
+    <div class="sec-label">03 &nbsp; PUBLICATIONS</div>
+    <h2 class="sec-title">Research Works</h2>
+    <div class="pub-list"></div>
+  </section>
+
+  <section id="projects" class="reveal">
+    <div class="sec-label">04 &nbsp; PROJECTS</div>
+    <h2 class="sec-title">What I've Built</h2>
+    <div class="projects-grid"></div>
+  </section>
+
+  <section id="news" class="reveal">
+    <div class="sec-label">05 &nbsp; UPDATES</div>
+    <h2 class="sec-title">Recent News</h2>
+    <div class="news-list"></div>
+  </section>
+
+  <section id="contact" class="reveal">
+    <div class="sec-label">06 &nbsp; CONTACT</div>
+    <h2 class="sec-title">Get in Touch</h2>
+    <div class="contact-box">
+      <p class="contact-intro" style="font-size:13px;color:var(--muted)"></p>
+      <div class="contact-email"></div>
+      <div class="contact-links"></div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<!-- Data -->
+<script src="data/site.js"></script>
+<script src="data/sidebar.js"></script>
+<script src="data/hero.js"></script>
+<script src="data/about.js"></script>
+<script src="data/experience.js"></script>
+<script src="data/publications.js"></script>
+<script src="data/projects.js"></script>
+<script src="data/news.js"></script>
+<script src="data/contact.js"></script>
+
+<!-- App -->
+<script src="js/main.js"></script>
+<script src="js/site-controls.js"></script>
+</body>
+</html>

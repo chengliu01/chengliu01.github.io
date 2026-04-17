@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Cheng Liu · Blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/style.css"/>
+<script src="data/site.js"></script>
+</head>
+<body>
+
+<div id="blog-gate" class="blog-gate" style="display:none">
+  <div class="blog-gate-card">
+    <div class="sec-label">BLOG</div>
+    <h2 class="sec-title">Unavailable</h2>
+    <p class="blog-gate-msg" id="blog-gate-msg"></p>
+    <a class="contact-link" href="index.html">← Back to home</a>
+  </div>
+</div>
+
+<div id="blog-app">
+<div class="sakura-layer" id="sakura"></div>
+
+<div class="shell">
+
+<aside>
+  <nav>
+    <a href="index.html#hero">        <span class="nav-dot"></span>Home</a>
+    <a href="index.html#about">       <span class="nav-dot"></span>About</a>
+    <a href="index.html#experience">  <span class="nav-dot"></span>Experience</a>
+    <a href="index.html#publications"><span class="nav-dot"></span>Publications</a>
+    <a href="index.html#projects">    <span class="nav-dot"></span>Projects</a>
+    <a href="index.html#news">        <span class="nav-dot"></span>Updates</a>
+    <a href="index.html#contact">     <span class="nav-dot"></span>Contact</a>
+    <a href="blog.html" class="active"><span class="nav-dot"></span>Blog</a>
+  </nav>
+
+  <div class="side-links"></div>
+  <div class="side-status"></div>
+  <div class="side-quote"></div>
+</aside>
+
+<main id="blog-main">
+  <div id="view-list">
+    <div class="sec-label">TECH BLOG</div>
+    <h2 class="sec-title">Writing</h2>
+
+    <div id="blog-view-switch" class="blog-view-switch"></div>
+    <div id="blog-theme-filters" class="blog-theme-filters"></div>
+
+    <div class="blog-grid" id="blog-grid"></div>
+  </div>
+
+  <div id="view-post" style="display:none;">
+    <div class="blog-post-nav">
+      <a href="#" class="blog-back-btn" id="back-btn">← All Posts</a>
+    </div>
+    <div class="blog-post-meta" id="post-meta"></div>
+    <h1 class="blog-post-title" id="post-title"></h1>
+    <div class="blog-post-content" id="post-content"></div>
+  </div>
+</main>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="data/sidebar.js"></script>
+<script src="data/hero.js"></script>
+<script src="blog/taxonomy.js"></script>
+<script src="blog/registry.js"></script>
+<script src="js/blog.js"></script>
+<script src="js/site-controls.js"></script>
+</body>
+</html>
