@@ -21,7 +21,7 @@
   --pixel-step: 4px;
   --pixel-shadow: 4px 4px 0 rgba(15, 23, 42, 0.18);
   --pixel-shadow-accent: 4px 4px 0 rgba(37, 99, 235, 0.35);
-  --font-pixel: 'VT323', 'Share Tech Mono', monospace;
+  --font-pixel: 'Pixelify Sans', 'Noto Sans JP', monospace;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,11 +41,13 @@ body {
   background-position: 0 0, 0 0, 0 0, 2px 2px;
   background-attachment: fixed;
   color: var(--ink);
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: var(--font-pixel);
   font-weight: 400;
+  line-height: 1.6;
   overflow-x: hidden;
   image-rendering: auto;
 }
+button, input, textarea, select { font: inherit; }
 
 /* ── SAKURA ────────────────────────────────── */
 .sakura-layer { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
@@ -159,10 +161,11 @@ nav a .nav-dot {
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
 
 .side-quote {
-  font-family: 'Playfair Display', serif;
-  font-size: 10px; font-style: italic;
+  font-family: var(--font-pixel);
+  font-size: 11px;
   color: var(--border); text-align: center;
-  margin-top: 12px; line-height: 1.6;
+  margin-top: 12px; line-height: 1.8;
+  letter-spacing: 0.04em;
 }
 
 /* ── MAIN (centered column in the area right of sidebar) ─ */
@@ -203,13 +206,15 @@ main {
   );
 }
 .sec-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
+  font-family: var(--font-pixel);
+  font-size: 24px;
   font-weight: 700;
   color: var(--ink);
   margin-bottom: 28px;
   position: relative;
   display: inline-block;
+  line-height: 1.45;
+  letter-spacing: 0.06em;
   text-shadow: 3px 3px 0 rgba(147, 197, 253, 0.9), 5px 5px 0 rgba(37, 99, 235, 0.12);
 }
 .sec-title::after {
@@ -325,26 +330,27 @@ section { margin-bottom: 72px; scroll-margin-top: 40px; }
 .hero-content { flex: 1; }
 .hero-tag {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; letter-spacing: 2px;
+  font-size: 11px; letter-spacing: 1px;
   color: var(--accent);
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   margin-bottom: 14px;
 }
 .hero-tag span { width: 20px; height: 1px; background: var(--accent); }
 .hero-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 52px; line-height: 1.1;
+  font-family: var(--font-pixel);
+  font-size: 42px; line-height: 1.25;
   font-weight: 700; color: var(--ink);
   margin-bottom: 10px;
+  letter-spacing: 0.04em;
 }
 .hero-name em {
-  font-style: italic;
+  font-style: normal;
   color: var(--accent);
   text-shadow: 3px 3px 0 rgba(147, 197, 253, 0.85);
 }
 .hero-sub {
   font-size: 14px; color: var(--muted);
-  margin-bottom: 24px; line-height: 1.8;
+  margin-bottom: 24px; line-height: 2;
   max-width: 100%;
 }
 .hero-sub strong { color: var(--ink2); font-weight: 600; }
@@ -445,7 +451,7 @@ section { margin-bottom: 72px; scroll-margin-top: 40px; }
   border: none;
 }
 .pub-thumb-fallback__arxiv-strip {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   font-size: 11px;
   font-weight: 700;
   color: #fff;
@@ -461,7 +467,7 @@ section { margin-bottom: 72px; scroll-margin-top: 40px; }
 .pub-thumb-fallback--venue {
   background: linear-gradient(145deg, var(--pale), #fff);
   color: var(--muted);
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   font-size: 11px;
   font-weight: 500;
 }
@@ -579,7 +585,7 @@ a.pub-venue--link:hover {
   right: 16px;
   bottom: 16px;
   z-index: 9999;
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: var(--font-pixel);
 }
 .site-admin-fab__btn {
   width: 48px;
@@ -613,17 +619,18 @@ a.pub-venue--link:hover {
   color: var(--ink2);
 }
 .site-admin-fab__title {
-  font-family: 'Playfair Display', serif;
-  font-size: 15px;
+  font-family: var(--font-pixel);
+  font-size: 14px;
   font-weight: 700;
   color: var(--ink);
   margin: 0 0 10px;
+  letter-spacing: 0.04em;
 }
 .site-admin-fab__row { margin: 0 0 10px; }
 .site-admin-fab__label { display: block; font-size: 10px; color: var(--muted); letter-spacing: .5px; margin-bottom: 4px; }
 .site-admin-fab__code {
   display: inline-block;
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   font-size: 10px;
   padding: 2px 6px;
   background: var(--pale);
@@ -842,10 +849,12 @@ a.pub-venue--link:hover {
   z-index: 1;
 }
 .contact-email {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
+  font-family: var(--font-pixel);
+  font-size: 18px;
   margin: 12px 0 24px;
-  font-style: italic;
+  font-style: normal;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
 }
 .contact-email a {
   color: var(--accent);
@@ -935,7 +944,7 @@ a.pub-venue--link:hover {
 }
 .blog-filter-row:last-child { margin-bottom: 0; }
 .blog-filter-label {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   font-size: 10px;
   color: var(--muted);
   letter-spacing: 1px;
@@ -950,7 +959,7 @@ a.pub-venue--link:hover {
   flex: 1;
 }
 .blog-filter-btn {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: var(--font-pixel);
   font-size: 12px;
   padding: 5px 12px;
   border-radius: 8px;
@@ -980,12 +989,12 @@ a.pub-venue--link:hover {
 .blog-time-group { margin-bottom: 28px; }
 .blog-time-group:last-child { margin-bottom: 0; }
 .blog-time-year {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-pixel);
   font-size: 17px;
   font-weight: 700;
   color: var(--ink);
   margin-bottom: 14px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
 }
 .blog-time-group:not(:first-child) .blog-time-year {
   padding-top: 22px;
@@ -1019,7 +1028,7 @@ a.pub-venue--link:hover {
   flex-wrap: wrap;
 }
 .blog-card-date {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   font-size: 11px; color: var(--muted); flex-shrink: 0;
 }
 .blog-card-theme {
@@ -1036,13 +1045,14 @@ a.pub-venue--link:hover {
 .blog-card-tag {
   font-size: 10px; padding: 2px 8px; border-radius: 8px;
   background: var(--pale); color: var(--accent);
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   border: 1px solid rgba(37,99,235,.15);
 }
 .blog-card-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px; font-weight: 700;
+  font-family: var(--font-pixel);
+  font-size: 16px; font-weight: 700;
   color: var(--ink); margin-bottom: 8px; line-height: 1.35;
+  letter-spacing: 0.03em;
 }
 .blog-card-excerpt {
   font-size: 13px; color: var(--muted); line-height: 1.7;
@@ -1051,7 +1061,7 @@ a.pub-venue--link:hover {
   display: flex; justify-content: flex-end; margin-top: 14px;
 }
 .blog-read-more {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   font-size: 11px; color: var(--accent); letter-spacing: .5px;
 }
 
@@ -1088,27 +1098,29 @@ a.pub-venue--link:hover {
   margin-bottom: 10px; flex-wrap: wrap;
 }
 .blog-post-date {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   font-size: 11px; color: var(--muted);
 }
 .blog-post-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 36px; font-weight: 700;
+  font-family: var(--font-pixel);
+  font-size: 30px; font-weight: 700;
   color: var(--ink); margin-bottom: 32px;
-  line-height: 1.2;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
 }
 
 /* markdown content */
 .blog-post-content {
-  font-size: 15px; line-height: 1.85;
+  font-size: 14px; line-height: 2;
   color: var(--ink2); max-width: 720px;
 }
 .blog-post-content h1,
 .blog-post-content h2,
 .blog-post-content h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-pixel);
   color: var(--ink); margin: 2em 0 .75em;
   font-weight: 700;
+  letter-spacing: 0.04em;
 }
 .blog-post-content h1 { font-size: 28px; }
 .blog-post-content h2 { font-size: 22px; }
@@ -1119,7 +1131,7 @@ a.pub-venue--link:hover {
 .blog-post-content li { margin-bottom: .4em; }
 .blog-post-content a  { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 .blog-post-content code {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   font-size: .9em; background: var(--pale);
   padding: 2px 6px; border-radius: 5px;
   color: var(--accent);
@@ -1137,7 +1149,7 @@ a.pub-venue--link:hover {
   border-left: 3px solid var(--accent);
   padding: .8em 1.2em; margin: 1.5em 0;
   background: var(--pale); border-radius: 0 10px 10px 0;
-  font-style: italic; color: var(--muted);
+  font-style: normal; color: var(--muted);
 }
 .blog-post-content hr {
   border: none; border-top: 1px solid var(--border);
@@ -1154,7 +1166,7 @@ a.pub-venue--link:hover {
 .blog-post-content th {
   background: var(--pale); color: var(--ink);
   padding: 8px 14px; text-align: left;
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-pixel);
   font-size: 11px; letter-spacing: .5px;
 }
 .blog-post-content td {
