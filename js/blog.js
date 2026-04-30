@@ -382,6 +382,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  if (gate) gate.style.display = 'none';
+  if (app) app.style.display = '';
+
   const back = document.getElementById('back-btn');
   if (back) {
     back.addEventListener('click', e => {
