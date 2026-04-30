@@ -6,7 +6,7 @@
  * showBlogAdminFab: floating admin button (set false on public sites if you prefer)
  */
 window.siteSettings = {
-  blogEnabled: false,
+  blogEnabled: true,
   blogClosedMessage: "The blog is temporarily unavailable. Please check back later or reach out via the homepage.",
   showBlogAdminFab: false,
 };
