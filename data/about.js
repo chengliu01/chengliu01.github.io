@@ -9,8 +9,8 @@ window.aboutData = {
     {
       color: "pink",
       icon: "🔬",
-      title: "Research Focus",
-      content: `Large language models (LLMs), reinforcement learning, dialogue systems, and reward modeling / alignment; reasoning, verification, and self-correction.`,
+      title: "",
+      content: `Beyond academics and code, I enjoy the outdoors, cycling, drawing, music and more; I believe music is the most magical thing in the world. I'm not great at face-to-face chit-chat, but I love quietly observing people and environments 👀`,
     },
   ],
 };
