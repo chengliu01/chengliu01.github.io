@@ -21,7 +21,7 @@
   --pixel-step: 4px;
   --pixel-shadow: 4px 4px 0 rgba(15, 23, 42, 0.18);
   --pixel-shadow-accent: 4px 4px 0 rgba(37, 99, 235, 0.35);
-  --font-pixel: 'Pixelify Sans', 'Noto Sans JP', monospace;
+  --font-pixel: 'Noto Sans JP', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
