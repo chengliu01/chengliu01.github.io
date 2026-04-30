@@ -1,6 +1,6 @@
 /**
  * Blog taxonomy — categories (topic + subtopic)
- * Edit labels here; ids are referenced from blog/registry.js (cat / sub).
+ * Edit labels here; ids are referenced from blog/registry.json (cat / sub).
  */
 window.blogTaxonomy = [
   {

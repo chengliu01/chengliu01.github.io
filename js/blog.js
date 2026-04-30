@@ -25,6 +25,25 @@ function themeLabel(p) {
   return sub ? `${mLabel} · ${sub.label}` : mLabel;
 }
 
+/** Post index: edit blog/registry.json and push — no rebuild. */
+async function loadBlogRegistry() {
+  window.blogRegistry = [];
+  try {
+    const res = await fetch('blog/registry.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const list = Array.isArray(data)
+      ? data
+      : (data && Array.isArray(data.posts) ? data.posts : null);
+    if (!Array.isArray(list))
+      console.warn('[blog] registry.json: use an array, or an object with a "posts" array.');
+    else window.blogRegistry = list;
+  } catch (e) {
+    console.warn('[blog] Could not load blog/registry.json:', e.message);
+    window.blogRegistry = [];
+  }
+}
+
 let viewMode = 'theme'; // 'theme' | 'time'
 let themeCat = null;
 let themeSub = null;
@@ -204,38 +223,151 @@ function renderBlogList() {
   });
 }
 
+/** Reject path traversal and absolute paths; allow nested dirs like foo/bar.md */
+function isSafePostRelativePath(filename) {
+  if (!filename || typeof filename !== 'string') return false;
+  const t = filename.trim();
+  if (t.includes('..')) return false;
+  if (t.startsWith('/') || t.startsWith('\\')) return false;
+  return /\.(md|js)$/i.test(t);
+}
+
+function encodeBlogPostFetchUrl(filename) {
+  const parts = filename.split('/').map(encodeURIComponent);
+  return `blog/posts/${parts.join('/')}`;
+}
+
+/**
+ * Minimal YAML-ish frontmatter: leading --- block, key: value lines.
+ * Overrides registry title/date only when keys are present.
+ */
+function parseMarkdownWithFrontmatter(raw) {
+  const text = raw.replace(/^\uFEFF/, '');
+  const lines = text.split(/\n/);
+  if (!lines.length || lines[0].trim() !== '---')
+    return { meta: {}, body: text.trim() };
+  const meta = {};
+  let i = 1;
+  for (; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.trim() === '---') {
+      i++;
+      break;
+    }
+    const m = /^([\w-]+)\s*:\s*(.+)$/.exec(line);
+    if (m) {
+      let v = m[2].trim().replace(/^["']|["']$/g, '');
+      meta[m[1]] = v;
+    }
+  }
+  const body = lines.slice(i).join('\n').replace(/^\n+/, '').trimEnd();
+  return { meta, body };
+}
+
+function renderMarkdownToEl(el, markdown) {
+  const md = typeof marked !== 'undefined' ? marked : null;
+  if (md && md.parse) el.innerHTML = md.parse(markdown);
+  else if (typeof md === 'function') el.innerHTML = md(markdown);
+  else el.innerHTML = markdown.replace(/</g, '&lt;');
+}
+
+function mergePostPayload(reg, meta, body) {
+  const title =
+    meta.title || (reg && reg.title) || 'Untitled';
+  const date =
+    meta.date || (reg && reg.date) || '';
+  return {
+    title,
+    date,
+    dateSort: meta.dateSort || (reg && reg.dateSort) || '',
+    content: body,
+  };
+}
+
+function showPostShell(reg, post) {
+  const themeStr = reg ? themeLabel(reg) : '';
+  document.getElementById('post-title').textContent = post.title;
+  document.getElementById('post-meta').innerHTML = `
+      <span class="blog-post-date">${post.date}</span>
+      ${themeStr ? `<span class="blog-card-theme blog-post-theme-inline">${themeStr}</span>` : ''}`;
+  const el = document.getElementById('post-content');
+  renderMarkdownToEl(el, post.content || '');
+}
+
+function navigateToPostInUi(filename) {
+  document.getElementById('view-list').style.display = 'none';
+  document.getElementById('view-post').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.location.hash = encodeURIComponent(filename);
+}
+
 function openPost(filename) {
-  const existing = document.getElementById('post-script');
-  if (existing) existing.remove();
+  if (!isSafePostRelativePath(filename)) return;
+
+  const reg = (window.blogRegistry || []).find(x => x.file === filename);
+
+  const existingScript = document.getElementById('post-script');
+  if (existingScript) existingScript.remove();
+
+  if (/\.md$/i.test(filename)) {
+    delete window.currentPost;
+
+    navigateToPostInUi(filename);
+
+    document.getElementById('post-title').textContent = '\u2026';
+    document.getElementById('post-meta').innerHTML = reg
+      ? `
+      <span class="blog-post-date">${reg.date}</span>
+      ${themeLabel(reg) ? `<span class="blog-card-theme blog-post-theme-inline">${themeLabel(reg)}</span>` : ''}`
+      : '';
+    const loadingEl = document.getElementById('post-content');
+    loadingEl.innerHTML = '<p class="blog-post-loading">Loading…</p>';
+
+    fetch(encodeBlogPostFetchUrl(filename))
+      .then(r => {
+        if (!r.ok) throw new Error(String(r.status));
+        return r.text();
+      })
+      .then(raw => {
+        const { meta, body } = parseMarkdownWithFrontmatter(raw);
+        const post = mergePostPayload(reg || {}, meta, body);
+        showPostShell(reg, post);
+      })
+      .catch(() => {
+        document.getElementById('post-title').textContent = 'Failed to load';
+        loadingEl.innerHTML =
+          '<p class="blog-post-error">Could not load this post. Refresh and try again, or open from the blog index.</p>';
+      });
+    return;
+  }
+
+  if (!/\.js$/i.test(filename)) return;
+
   const script = document.createElement('script');
   script.id = 'post-script';
-  script.src = `blog/posts/${filename}`;
+  script.src = encodeBlogPostFetchUrl(filename);
   script.onload = () => {
     const post = window.currentPost;
-    if (!post) return;
-    const reg = (window.blogRegistry || []).find(x => x.file === filename);
-    const themeStr = reg ? themeLabel(reg) : '';
-
-    document.getElementById('post-title').textContent = post.title;
-    document.getElementById('post-meta').innerHTML = `
-      <span class="blog-post-date">${post.date}</span>
-      ${themeStr ? `<span class="blog-card-theme blog-post-theme-inline">${themeStr}</span>` : ''}
-    `;
-    const el = document.getElementById('post-content');
-    const md = typeof marked !== 'undefined' ? marked : null;
-    if (md && md.parse) el.innerHTML = md.parse(post.content);
-    else if (typeof md === 'function') el.innerHTML = md(post.content);
-    else el.innerHTML = post.content.replace(/</g, '&lt;');
-
-    document.getElementById('view-list').style.display = 'none';
-    document.getElementById('view-post').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    window.location.hash = filename;
+    if (!post) {
+      document.getElementById('post-title').textContent = 'Failed to load';
+      document.getElementById('post-content').innerHTML =
+        '<p class="blog-post-error">This script did not expose <code>window.currentPost</code>.</p>';
+      navigateToPostInUi(filename);
+      return;
+    }
+    showPostShell(reg, post);
+    navigateToPostInUi(filename);
+  };
+  script.onerror = () => {
+    document.getElementById('post-title').textContent = 'Failed to load';
+    document.getElementById('post-content').innerHTML =
+      '<p class="blog-post-error">Could not load this script. The post file may be missing.</p>';
+    navigateToPostInUi(filename);
   };
   document.body.appendChild(script);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const gate = document.getElementById('blog-gate');
   const app = document.getElementById('blog-app');
   if (typeof window.isBlogOpen === 'function' && !window.isBlogOpen()) {
@@ -261,12 +393,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  await loadBlogRegistry();
+
   initSakura();
   initSidebar();
   renderViewSwitch();
   renderThemeFilters();
   renderBlogList();
 
-  const hash = window.location.hash.slice(1);
-  if (hash && hash.endsWith('.js')) openPost(hash);
+  let hash = window.location.hash.slice(1);
+  if (!hash) return;
+  try {
+    hash = decodeURIComponent(hash);
+  } catch (_) { /* keep raw */ }
+  if (isSafePostRelativePath(hash) && (/\.js$/i.test(hash) || /\.md$/i.test(hash))) openPost(hash);
 });

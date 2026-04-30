@@ -1,0 +1,11 @@
+[
+  {
+    "file": "0430/codex-subagent.md",
+    "title": "Codex subagent 配置：主从协作与 config 分层",
+    "date": "Apr 30, 2026",
+    "dateSort": "2026-04-30",
+    "cat": "notes",
+    "sub": "idea",
+    "excerpt": "主 agent / subagent 如何协作、上下文如何拼装，以及全局 / 项目 / 角色配置的取舍与常用的 skill、MCP 等行为与权限字段。"
+  }
+]

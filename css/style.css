@@ -1109,6 +1109,23 @@ a.pub-venue--link:hover {
   letter-spacing: 0.05em;
 }
 
+.blog-post-loading,
+.blog-post-error {
+  margin: 0;
+  padding: 1em 1.2em;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.blog-post-loading {
+  background: var(--pale);
+}
+.blog-post-error {
+  border: 1px solid rgba(239,68,68,.35);
+  background: rgba(254,226,226,.08);
+  color: #b91c1c;
+}
+
 /* markdown content */
 .blog-post-content {
   font-size: 14px; line-height: 2;

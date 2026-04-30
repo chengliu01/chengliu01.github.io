@@ -1,0 +1,11 @@
+[
+  {
+    "file": "subdir/your-post.md",
+    "title": "Shown in the post header and listing",
+    "date": "Apr 30, 2026",
+    "dateSort": "2026-04-30",
+    "cat": "notes",
+    "sub": "idea",
+    "excerpt": "One short line for cards; cat/sub ids must exist in blog/taxonomy.js"
+  }
+]
